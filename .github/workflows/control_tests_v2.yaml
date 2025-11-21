@@ -1,0 +1,32 @@
+name: Control Push
+on: push
+
+jobs:
+  qa:
+    name: Check tests
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4  # Version mise à jour
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5  # Version mise à jour
+        with:
+          python-version: "3.12"  # Version spécifique recommandée
+          cache: 'pip'  # Cache des dépendances pour accélérer
+      
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pytest flake8
+          # Si vous avez un requirements.txt :
+          # pip install -r requirements.txt
+      
+      - name: Run flake8
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      
+      - name: Run tests with pytest
+        run: |
+          pytest -v --tb=short
