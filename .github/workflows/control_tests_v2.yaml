@@ -1,9 +1,9 @@
-name: Control Push
+name: Control_Push_2
 on: push
 
 jobs:
   qa:
-    name: Check tests
+    name: Check_tests_2
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
@@ -18,7 +18,8 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install pytest flake8
+          pip install -r requirements.txt
+          # pip install pytest flake8
           # Si vous avez un requirements.txt :
           # pip install -r requirements.txt
       
